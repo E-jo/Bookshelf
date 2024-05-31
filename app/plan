@@ -1,0 +1,20 @@
+Bookshelf plan
+
+search (category at first)
+call google api and retrieve ids and "thumbnail" key
+thumbnails in vertical 2 row lazygrid, just as in mars photos app
+clickable to bring up detail screen, as in sports app
+
+first composables to work on:
+search button (on menu?)
+[search dialog]
+thumbnail list
+detail page
+
+first models to work on:
+book
+bookshelfUiState
+
+first infrastructure to work on:
+everything from mars photos app
+
