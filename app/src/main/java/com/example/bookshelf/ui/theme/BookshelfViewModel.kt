@@ -30,7 +30,6 @@ class BookshelfViewModel(
 ) : ViewModel() {
 
     var bookshelfUiState: BookshelfUiState by mutableStateOf(BookshelfUiState.Loading)
-        private set
 
     private val _screenState = MutableStateFlow(
         ScreenState(
@@ -40,10 +39,10 @@ class BookshelfViewModel(
     val screenState: StateFlow<ScreenState> = _screenState
 
     init {
-        getBooks()
+        getBooks(query)
     }
 
-    private fun getBooks() {
+    fun getBooks(query: String) {
         viewModelScope.launch {
             bookshelfUiState = try {
                 BookshelfUiState.Success(bookshelfRepository.getBooks(query))
@@ -74,6 +73,17 @@ class BookshelfViewModel(
         }
     }
 
+    fun showDialog() {
+        _screenState.update {
+            it.copy(showDialog = true)
+        }
+    }
+    fun dismissDialog() {
+        _screenState.update {
+            it.copy(showDialog = false)
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
@@ -89,5 +99,6 @@ class BookshelfViewModel(
 
 data class ScreenState(
     val isShowingThumbnailScreen: Boolean = true,
-    val currentBook: Book = Book("", "", "")
+    val currentBook: Book = Book("", "", ""),
+    val showDialog: Boolean = false
 )

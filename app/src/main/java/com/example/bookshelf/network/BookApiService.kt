@@ -8,7 +8,10 @@ import retrofit2.http.Query
 
 interface BookGeneralApiService {
     @GET("volumes")
-    suspend fun getBooks(@Query("q") query: String): JsonObject
+    suspend fun getBooks(
+        @Query("q") query: String,
+        @Query("maxResults") maxResults: Int
+    ): JsonObject
 }
 
 interface BookDetailApiService {

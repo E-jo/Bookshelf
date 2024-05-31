@@ -3,12 +3,15 @@ package com.example.bookshelf.ui.theme.screens
 import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.unit.dp
 import com.example.bookshelf.R
 import com.example.bookshelf.models.Book
 
@@ -18,18 +21,25 @@ fun BookList(
     onClick: (Book) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val scrollState = rememberLazyListState()
+
     Log.d("BookList", "Size of bookList: ${books.size}")
     for (book in books) {
         Log.d("BookList", "Book: $book.title")
     }
 
     LazyColumn(
-        modifier = modifier.padding(
+        modifier = modifier
+            .padding(
             top = dimensionResource(id = R.dimen.padding_medium),
             start = dimensionResource(id = R.dimen.padding_medium),
-            end = dimensionResource(id = R.dimen.padding_medium),
+            //end = dimensionResource(id = R.dimen.padding_medium),
         ),
+        state = scrollState
     ) {
+        item {
+            Spacer(modifier = Modifier.height(60.dp))
+        }
         val bookPairs = books.chunkIntoPairs(2)
         items(bookPairs) { bookPair ->
             Row {

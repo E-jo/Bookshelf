@@ -3,6 +3,10 @@ package com.example.bookshelf.ui.theme.screens
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -18,6 +22,22 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel: BookshelfViewModel = viewModel()
+
+    var searchText by remember { mutableStateOf("") }
+
+    if (bookshelfScreenState.value.showDialog) {
+        SearchDialog(
+            searchText = searchText,
+            onSearchTextChange = { searchText = it },
+            onDismissRequest = { viewModel.dismissDialog() },
+            onSearch = {
+                viewModel.dismissDialog()
+                viewModel.bookshelfUiState = BookshelfUiState.Loading
+                viewModel.getBooks(searchText)
+                viewModel.navigateToThumbnailPage()
+            }
+        )
+    }
 
     if (bookshelfScreenState.value.isShowingThumbnailScreen) {
         when (bookshelfUiState) {

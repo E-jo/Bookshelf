@@ -9,12 +9,13 @@ interface BookshelfRepository {
 }
 
 var query = "jazz+history"
+var maxResults = 40
 
 class BookshelfRepositoryImpl(
     private val bookGeneralApiService: BookGeneralApiService
 ) : BookshelfRepository {
     override suspend fun getBooks(query: String): List<Book> {
-        val response = bookGeneralApiService.getBooks(query)
+        val response = bookGeneralApiService.getBooks(query, maxResults)
         val items = response.get("items").asJsonArray
         val books: MutableList<Book> = mutableListOf()
 
@@ -56,6 +57,7 @@ class BookshelfRepositoryImpl(
 
             books.add(Book(
                 title = title ?: "Unknown Title",
+                authors = authors ?: "Unknown Author",
                 description = description ?: "No Description",
                 thumbnail = thumbnail
             ))
