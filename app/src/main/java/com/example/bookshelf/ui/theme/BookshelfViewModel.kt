@@ -25,6 +25,12 @@ sealed interface BookshelfUiState {
     data object Loading : BookshelfUiState
 }
 
+data class ScreenState(
+    val isShowingThumbnailScreen: Boolean = true,
+    val currentBook: Book = Book("", "", ""),
+    val showDialog: Boolean = false
+)
+
 class BookshelfViewModel(
     private val bookshelfRepository: BookshelfRepository
 ) : ViewModel() {
@@ -97,8 +103,4 @@ class BookshelfViewModel(
     }
 }
 
-data class ScreenState(
-    val isShowingThumbnailScreen: Boolean = true,
-    val currentBook: Book = Book("", "", ""),
-    val showDialog: Boolean = false
-)
+
