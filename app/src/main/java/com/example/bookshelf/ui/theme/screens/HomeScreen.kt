@@ -16,10 +16,10 @@ import com.example.bookshelf.ui.theme.ScreenState
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     bookshelfUiState: BookshelfUiState,
     bookshelfScreenState: State<ScreenState>,
     contentPadding: PaddingValues = PaddingValues(6.dp),
-    modifier: Modifier = Modifier
 ) {
     val viewModel: BookshelfViewModel = viewModel()
 
@@ -54,8 +54,11 @@ fun HomeScreen(
     } else {
         BookCard(
             book = bookshelfScreenState.value.currentBook,
-            onItemClick = {}
+            onItemClick = { }
         )
     }
 
 }
+
+
+
